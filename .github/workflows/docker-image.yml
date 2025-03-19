@@ -46,12 +46,19 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
+      # Step 2: Carregar variáveis do arquivo .env
+      - name: Set up environment variables
+        run: |
+          set -o allexport
+          source .env
+          set +o allexport
+
       # Step 2: Logar no Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ env.DOCKER_USERNAME }}
-          password: ${{ env.DOCKER_PASSWORD }}
+          username: ${{ secret.DOCKER_USERNAME }}
+          password: ${{ secret.DOCKER_PASSWORD }}
 
       # Step 3: Construir a imagem Docker
       - name: Build Docker image
