@@ -29,7 +29,7 @@ jobs:
 
       # Step 3: Restaurar dependências
       - name: Restore dependencies
-        run: dotnet restore "src/UI/Mstech.Mdm.Api/Nstech.Mdm.Api.csproj"
+        run: dotnet restore "src/UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
 
       # Step 4: Rodar os testes
       - name: Run tests
