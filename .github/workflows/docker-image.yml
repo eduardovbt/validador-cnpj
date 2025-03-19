@@ -1,0 +1,66 @@
+name: Build, Test, and Deploy Docker Image
+
+on:
+  # Acionar o workflow para PRs abertos para qualquer branch
+  pull_request:
+    branches:
+      - '*'  # Isso faz com que o workflow seja acionado para PRs em qualquer branch
+
+  # Acionar o workflow para push na branch master
+  push:
+    branches:
+      - main  # Isso faz com que o workflow seja acionado quando houver push na branch master
+
+jobs:
+  
+  # Job para rodar o build e os testes
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Verificar o código do repositório
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # Step 2: Configurar o .NET SDK
+      - name: Set up .NET SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0'
+
+      # Step 3: Restaurar dependências
+      - name: Restore dependencies
+        run: dotnet restore "src/UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
+
+      # Step 4: Rodar os testes
+      - name: Run tests
+        run: dotnet test "src/Tests/Nstech.Mdm.Tests/Nstech.Mdm.Tests.csproj" 
+
+  # Job para construir e publicar a imagem Docker
+  publish:
+    runs-on: ubuntu-latest
+    needs: build_and_test  # Isso vai garantir que o job de testes passe antes do job de publicação
+    if: github.event_name == 'push'  # Isso garante que essa parte só será executada em um push para a branch master
+
+    steps:
+      # Step 1: Verificar o código do repositório
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # Step 2: Logar no Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: "mxogalasso300"
+          password: "dckr_pat_rD93uadqEWrD-dZlD3XQkKn76iE"
+
+      # Step 3: Construir a imagem Docker
+      - name: Build Docker image
+        run: |
+          docker build -t mxogalasso300/nstech:${{ github.sha }} -f ./src/UI/Mstech.Mdm.Api/Dockerfile .
+          docker tag mxogalasso300/nstech:${{ github.sha }} mxogalasso300/nstech:latest
+
+      # Step 4: Enviar a imagem para o Docker Hub
+      - name: Push Docker image
+        run: |
+          docker push mxogalasso300/nstech:${{ github.sha }}
+          docker push mxogalasso300/nstech:latest
