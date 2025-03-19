@@ -9,7 +9,7 @@ on:
   # Acionar o workflow para push na branch master
   push:
     branches:
-      - master  # Isso faz com que o workflow seja acionado quando houver push na branch master
+      - main  # Isso faz com que o workflow seja acionado quando houver push na branch master
 
 jobs:
   
@@ -50,8 +50,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ secret.DOCKER_USERNAME }}
-          password: ${{ secret.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
       # Step 3: Construir a imagem Docker
       - name: Build Docker image
