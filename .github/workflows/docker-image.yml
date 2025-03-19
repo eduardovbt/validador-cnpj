@@ -56,7 +56,7 @@ jobs:
       # Step 3: Construir a imagem Docker
       - name: Build Docker image
         run: |
-          docker build -t mxogalasso300/nstech:${{ github.sha }} -f ./src/UI/Mstech.Mdm.Api/Dockerfile .
+          docker build -t mxogalasso300/nstech:${{ github.sha }} -f ./src/UI/Nstech.Mdm.Api/Dockerfile .
           docker tag mxogalasso300/nstech:${{ github.sha }} mxogalasso300/nstech:latest
 
       # Step 4: Enviar a imagem para o Docker Hub
