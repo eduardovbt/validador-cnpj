@@ -46,13 +46,6 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v3
 
-      # Step 2: Carregar variáveis do arquivo .env
-      - name: Set up environment variables
-        run: |
-          set -o allexport
-          source .env
-          set +o allexport
-
       # Step 2: Logar no Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
