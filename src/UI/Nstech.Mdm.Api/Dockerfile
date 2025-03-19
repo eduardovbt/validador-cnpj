@@ -11,7 +11,7 @@ COPY ["Nstech.Mdm.Api/Nstech.Mdm.Api.csproj", "Nstech.Mdm.Api/"]
 RUN dotnet restore "Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
 
 # Copie o restante dos arquivos do projeto
-COPY Nstech.Mdm.Api/. Nstech.Mdm.Api/
+COPY src/UI/Nstech.Mdm.Api/. Nstech.Mdm.Api/
 
 # Defina o diretório de trabalho como o diretório do projeto
 WORKDIR "src/Nstech.Mdm.Api"
