@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="MassTransit.Kafka" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Nstech.Mdm.Abstract\Nstech.Mdm.Abstract.csproj" />
+    <ProjectReference Include="..\..\Core\Nstech.Mdm.Domain\Nstech.Mdm.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

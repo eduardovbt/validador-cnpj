@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.Kafka" Version="8.4.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
+    <PackageReference Include="Scrutor" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\Nstech.Mdm.Domain\Nstech.Mdm.Domain.csproj" />
+    <ProjectReference Include="..\..\Core\Nstech.Mdm.Service\Nstech.Mdm.Service.csproj" />
+    <ProjectReference Include="..\Nstech.Mdm.Broker.Kafka\Nstech.Mdm.Broker.Kafka.csproj" />
+    <ProjectReference Include="..\Nstech.Mdm.Repository.Postgresql\Nstech.Mdm.Repository.Postgresql.csproj" />
+  </ItemGroup>
+
+</Project>
