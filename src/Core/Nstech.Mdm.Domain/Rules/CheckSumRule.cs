@@ -48,4 +48,3 @@ namespace Nstech.Mdm.Domain.Rules
         }
     }
 }
-

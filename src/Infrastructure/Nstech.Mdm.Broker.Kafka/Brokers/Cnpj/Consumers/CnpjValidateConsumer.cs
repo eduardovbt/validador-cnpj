@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Text.RegularExpressions;
+using FluentValidation;
 using MassTransit;
 using Nstech.Mdm.Abstract.Services;
 using Nstech.Mdm.Broker.Kafka.Brokers.Cnpj.Producers;
@@ -28,6 +29,7 @@ namespace Nstech.Mdm.Broker.Kafka.Brokers.Cnpj.Consumers
 
         public async Task IntegrationAsync(CnpjMessage message)
         {
+            message.Cnpj = Regex.Replace(message.Cnpj, @"\D", "");
             var resultValidate = _checkSumValidator.Validate(message);
             if (!resultValidate.IsValid)
             {

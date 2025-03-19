@@ -1,30 +1,40 @@
-# Acesse https://aka.ms/customizecontainer para saber como personalizar seu contêiner de depuração e como o Visual Studio usa este Dockerfile para criar suas imagens para uma depuração mais rápida.
-
-# Esta fase é usada durante a execução no VS no modo rápido (Padrão para a configuração de Depuração)
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
-
-
-# Esta fase é usada para compilar o projeto de serviço
+# Etapa 1: Construção
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
+
+# Defina o diretório de trabalho como /src dentro do container
 WORKDIR /src
+
+# Copie o arquivo .csproj para o diretório correto dentro do container
 COPY ["Nstech.Mdm.Api/Nstech.Mdm.Api.csproj", "Nstech.Mdm.Api/"]
-RUN dotnet restore "./Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
-COPY . .
-WORKDIR "/src/Nstech.Mdm.Api"
-RUN dotnet build "./Nstech.Mdm.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final
+# Restaure as dependências do projeto
+RUN dotnet restore "Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
+
+# Copie o restante dos arquivos do projeto
+COPY Nstech.Mdm.Api/. Nstech.Mdm.Api/
+
+# Defina o diretório de trabalho como o diretório do projeto
+WORKDIR "src/Nstech.Mdm.Api"
+
+# Compile o projeto
+RUN dotnet build "Nstech.Mdm.Api.csproj" -c Release -o /app/build
+
+# Etapa 2: Publicação
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Nstech.Mdm.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Nstech.Mdm.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-# Esta fase é usada na produção ou quando executada no VS no modo normal (padrão quando não está usando a configuração de Depuração)
-FROM base AS final
+# Etapa 3: Execução
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+
+# Defina o diretório de trabalho para o diretório de execução
 WORKDIR /app
+
+# Exponha a porta 80 para o container
+EXPOSE 80
+
+# Copie o aplicativo publicado para o diretório de execução
 COPY --from=publish /app/publish .
+
+# Defina o ponto de entrada para o aplicativo
 ENTRYPOINT ["dotnet", "Nstech.Mdm.Api.dll"]
+
