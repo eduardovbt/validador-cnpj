@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 # Copie o arquivo .csproj para o diretório correto dentro do container
-COPY ["Nstech.Mdm.Api/Nstech.Mdm.Api.csproj", "Nstech.Mdm.Api/"]
+COPY ["src/UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj", "Nstech.Mdm.Api/"]
 
 # Restaure as dependências do projeto
 RUN dotnet restore "Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
@@ -14,7 +14,7 @@ RUN dotnet restore "Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
 COPY src/UI/Nstech.Mdm.Api/. Nstech.Mdm.Api/
 
 # Defina o diretório de trabalho como o diretório do projeto
-WORKDIR "src/Nstech.Mdm.Api"
+WORKDIR "/src/Nstech.Mdm.Api"
 
 # Compile o projeto
 RUN dotnet build "Nstech.Mdm.Api.csproj" -c Release -o /app/build
@@ -37,4 +37,3 @@ COPY --from=publish /app/publish .
 
 # Defina o ponto de entrada para o aplicativo
 ENTRYPOINT ["dotnet", "Nstech.Mdm.Api.dll"]
-
