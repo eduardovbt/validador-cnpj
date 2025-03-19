@@ -11,10 +11,6 @@ on:
     branches:
       - master  # Isso faz com que o workflow seja acionado quando houver push na branch master
 
-env:
-  DOCKER_USERNAME: "seu-usuario"
-  DOCKER_PASSWORD: "sua-senha"
-
 jobs:
   
   # Job para rodar o build e os testes
