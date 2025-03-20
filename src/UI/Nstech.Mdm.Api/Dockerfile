@@ -14,7 +14,7 @@ RUN dotnet restore "Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
 COPY src/UI/Nstech.Mdm.Api/. Nstech.Mdm.Api/
 
 # Defina o diretório de trabalho como o diretório do projeto
-WORKDIR "/src/UI/Nstech.Mdm.Api"
+WORKDIR "./"
 
 # Compile o projeto
 RUN dotnet build "Nstech.Mdm.Api.csproj" -c Release -o /app/build
