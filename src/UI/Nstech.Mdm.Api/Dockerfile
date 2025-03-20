@@ -17,7 +17,7 @@ COPY src/UI/Nstech.Mdm.Api/. src/UI/Nstech.Mdm.Api/
 WORKDIR "UI/Nstech.Mdm.Api"
 
 # Compile o projeto
-RUN dotnet build "Nstech.Mdm.Api.csproj" -c Release -o /app/build
+RUN dotnet build "/Nstech.Mdm.Api.csproj" -c Release -o /app/build
 
 # Etapa 2: Publicação
 FROM build AS publish
