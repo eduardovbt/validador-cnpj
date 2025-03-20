@@ -8,13 +8,13 @@ WORKDIR /src
 COPY ["src/UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj", "Nstech.Mdm.Api/"]
 
 # Restaure as dependências do projeto
-RUN dotnet restore "Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
+RUN dotnet restore "src/UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
 
 # Copie o restante dos arquivos do projeto
-COPY src/UI/Nstech.Mdm.Api/. Nstech.Mdm.Api/
+COPY Nstech.Mdm.Api/. Nstech.Mdm.Api/
 
 # Defina o diretório de trabalho como o diretório do projeto
-WORKDIR "/src/UI/Nstech.Mdm.Api"
+WORKDIR "/src/Nstech.Mdm.Api"
 
 # Compile o projeto
 RUN dotnet build "Nstech.Mdm.Api.csproj" -c Release -o /app/build
