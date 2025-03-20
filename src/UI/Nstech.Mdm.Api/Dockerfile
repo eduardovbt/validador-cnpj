@@ -8,7 +8,7 @@ WORKDIR /src
 COPY ["src/UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj", "src/UI/Nstech.Mdm.Api/"]
 
 # Restaure as dependências do projeto
-RUN dotnet restore "UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
+RUN dotnet restore "/UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj"
 
 # Copie o restante dos arquivos do projeto
 COPY src/UI/Nstech.Mdm.Api/. src/UI/Nstech.Mdm.Api/
@@ -21,7 +21,7 @@ RUN dotnet build "/Nstech.Mdm.Api.csproj" -c Release -o /app/build
 
 # Etapa 2: Publicação
 FROM build AS publish
-RUN dotnet publish "UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "/UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Etapa 3: Execução
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
