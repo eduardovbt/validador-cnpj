@@ -17,11 +17,11 @@ COPY src/UI/Nstech.Mdm.Api/. Nstech.Mdm.Api/
 WORKDIR "/src/Nstech.Mdm.Api"
 
 # Compile o projeto
-RUN dotnet build "./src/UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj" -c Release -o /app/build
+RUN dotnet build "./Nstech.Mdm.Api.csproj" -c Release -o /app/build
 
 # Etapa 2: Publicação
 FROM build AS publish
-RUN dotnet publish "./src/UI/Nstech.Mdm.Api/Nstech.Mdm.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./Nstech.Mdm.Api.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # Etapa 3: Execução
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
